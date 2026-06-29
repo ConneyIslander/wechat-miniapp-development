@@ -4,6 +4,7 @@ require('./db');
 const billsRouter = require('./routes/bills');
 const categoriesRouter = require('./routes/categories');
 const budgetsRouter = require('./routes/budgets');
+const statisticsRouter = require('./routes/statistics');
 
 const app = express();
 const PORT = 3000;
@@ -14,6 +15,7 @@ app.use(express.json());
 app.use('/api/bills', billsRouter);
 app.use('/api/categories', categoriesRouter);
 app.use('/api/budgets', budgetsRouter);
+app.use('/api/statistics', statisticsRouter);
 
 app.get('/health', (req, res) => {
   res.json({
