@@ -1,0 +1,23 @@
+<!--pages/statistics/statistics.wxml-->
+<view class="page-container">
+  <view class="placeholder-block">
+    <text>【顶部】月份切换器</text>
+    <view>当前月份：{{month}}</view>
+  </view>
+
+  <view class="placeholder-block">
+    <text>【中部】收支汇总</text>
+    <view>总支出：¥{{totalExpense}}</view>
+    <view>总收入：¥{{totalIncome}}</view>
+  </view>
+
+  <view class="placeholder-block">
+    <text>【中部】分类支出饼图 (Canvas)</text>
+    <view>分类数：{{expenseByCategory.length}}</view>
+  </view>
+
+  <view class="placeholder-block">
+    <text>【中部】日度支出柱状图 (Canvas)</text>
+    <view>日期数：{{dailyExpense.length}}</view>
+  </view>
+</view>

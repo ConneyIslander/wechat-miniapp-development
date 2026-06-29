@@ -1,0 +1,24 @@
+<!--pages/bill-list/bill-list.wxml-->
+<view class="page-container">
+  <view class="placeholder-block">
+    <text>【顶部】月份切换器</text>
+    <view>当前月份：{{month}}</view>
+  </view>
+
+  <view class="placeholder-block">
+    <text>【中部】按日期分组的账单列表</text>
+    <block wx:if="{{groupedBills.length === 0}}">
+      <view>暂无账单数据</view>
+    </block>
+    <block wx:else>
+      <view wx:for="{{groupedBills}}" wx:key="date">
+        <view>日期：{{item.date}}</view>
+      </view>
+    </block>
+  </view>
+
+  <view class="placeholder-block">
+    <text>【每条】账单卡片</text>
+    <view>账单总数：{{bills.length}}</view>
+  </view>
+</view>

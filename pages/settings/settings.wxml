@@ -1,0 +1,21 @@
+<!--pages/settings/settings.wxml-->
+<view class="page-container">
+  <view class="placeholder-block">
+    <text>【顶部】月度预算设置</text>
+    <view>月份：{{month}}</view>
+    <view>当前预算：¥{{budget}}</view>
+    <button>保存预算</button>
+  </view>
+
+  <view class="placeholder-block">
+    <text>【中部】支出分类管理</text>
+    <view>分类数：{{expenseCategories.length}}</view>
+    <button>添加支出分类</button>
+  </view>
+
+  <view class="placeholder-block">
+    <text>【底部】收入分类管理</text>
+    <view>分类数：{{incomeCategories.length}}</view>
+    <button>添加收入分类</button>
+  </view>
+</view>
