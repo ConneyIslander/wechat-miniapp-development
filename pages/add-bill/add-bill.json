@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "记一笔",
-  "usingComponents": {}
+  "usingComponents": {
+    "category-picker": "/components/category-picker/category-picker"
+  }
 }

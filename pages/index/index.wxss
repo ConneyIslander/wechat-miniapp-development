@@ -79,6 +79,36 @@
   border-radius: 20rpx;
   overflow: hidden;
 }
+/* 日期分组 */
+.day-group {
+  border-bottom: 1rpx solid #F5F5F5;
+}
+.day-group:last-child {
+  border-bottom: none;
+}
+.day-header {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 28rpx 12rpx;
+  gap: 16rpx;
+}
+.day-date {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+.day-summary {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+.day-summary.expense {
+  color: #F43F5E;
+}
+.day-summary.income {
+  color: #10B981;
+  margin-left: 8rpx;
+}
 .bill-item {
   display: flex;
   align-items: center;

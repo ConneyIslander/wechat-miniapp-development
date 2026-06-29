@@ -1,0 +1,13 @@
+<!--components/category-picker/category-picker.wxml-->
+<view class="category-grid">
+  <view
+    wx:for="{{categories}}"
+    wx:key="id"
+    class="category-item {{item.id === selectedId ? 'active' : ''}}"
+    bindtap="onSelect"
+    data-item="{{item}}"
+  >
+    <view class="category-icon">{{item.icon}}</view>
+    <view class="category-name">{{item.name}}</view>
+  </view>
+</view>

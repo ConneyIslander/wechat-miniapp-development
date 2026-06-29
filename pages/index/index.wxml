@@ -28,27 +28,41 @@
     </view>
   </view>
 
-  <!-- 今日账单 -->
-  <view class="section-title">今日账单</view>
+  <!-- 本月账单（按日期分组） -->
+  <view class="section-title">本月账单</view>
   <view class="bill-list">
-    <block wx:if="{{todayBills.length === 0}}">
-      <view class="empty-tip">今天还没有记账</view>
+    <block wx:if="{{groupedBills.length === 0}}">
+      <view class="empty-tip">本月还没有账单</view>
     </block>
     <block wx:else>
       <view
-        wx:for="{{todayBills}}"
-        wx:key="id"
-        class="bill-item"
+        wx:for="{{groupedBills}}"
+        wx:key="date"
+        class="day-group"
       >
-        <view class="bill-icon-wrap {{item.iconBg}}">
-          <text class="bill-icon-text">{{item.iconChar}}</text>
+        <!-- 日期标题 -->
+        <view class="day-header">
+          <text class="day-date">{{item.date}}</text>
+          <text class="day-summary expense">支 ¥{{item.expense}}</text>
+          <text class="day-summary income">收 ¥{{item.income}}</text>
         </view>
-        <view class="bill-info">
-          <view class="bill-name">{{item.category}}</view>
-          <view class="bill-note">{{item.note}}</view>
-        </view>
-        <view class="bill-amount {{item.type}}">
-          {{item.type === 'income' ? '+' : '-'}}{{item.amount}}
+        <!-- 该日账单 -->
+        <view
+          wx:for="{{item.bills}}"
+          wx:for-item="bill"
+          wx:key="id"
+          class="bill-item"
+        >
+          <view class="bill-icon-wrap {{bill.iconBg}}">
+            <text class="bill-icon-text">{{bill.iconChar}}</text>
+          </view>
+          <view class="bill-info">
+            <view class="bill-name">{{bill.category}}</view>
+            <view class="bill-note">{{bill.note}}</view>
+          </view>
+          <view class="bill-amount {{bill.type}}">
+            {{bill.type === 'income' ? '+' : '-'}}{{bill.amount}}
+          </view>
         </view>
       </view>
     </block>
