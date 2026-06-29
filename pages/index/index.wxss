@@ -1,1 +1,161 @@
-/**index.wxss**/
+/* pages/index/index.wxss */
+
+.page {
+  min-height: 100vh;
+  background-color: var(--bg);
+  padding-bottom: 160rpx;
+}
+
+/* 月份切换 */
+.month-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32rpx 0 24rpx;
+  gap: 24rpx;
+}
+.month-arrow {
+  font-size: 48rpx;
+  color: var(--primary);
+  padding: 8rpx 16rpx;
+}
+.month-text {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* 概览卡片 */
+.overview-card {
+  background: linear-gradient(135deg, #667EEA 0%, #764BA2 50%, #6B8DD6 100%);
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  margin: 0 24rpx 32rpx;
+  box-shadow: 0 8rpx 32rpx rgba(102, 126, 234, 0.35);
+}
+.overview-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.overview-item {
+  flex: 1;
+  text-align: center;
+}
+.overview-divider {
+  width: 1rpx;
+  height: 80rpx;
+  background: rgba(255, 255, 255, 0.3);
+}
+.overview-label {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8rpx;
+}
+.overview-value {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+.overview-value.expense {
+  color: #FCA5A5;
+}
+.overview-value.income {
+  color: #86EFAC;
+}
+
+/* 今日账单标题 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--text);
+  padding: 0 32rpx 16rpx;
+}
+
+/* 账单列表 */
+.bill-list {
+  background: var(--white);
+  margin: 0 24rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+.bill-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 28rpx;
+  border-bottom: 1rpx solid #F0F0F0;
+}
+.bill-item:last-child {
+  border-bottom: none;
+}
+.bill-icon-wrap {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.bill-icon-text {
+  font-size: 32rpx;
+  font-weight:  600;
+  color: #FFFFFF;
+}
+.bg-violet { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+.bg-indigo  { background: linear-gradient(135deg, #6366F1, #4F46E5); }
+.bg-emerald { background: linear-gradient(135deg, #10B981, #059669); }
+.bg-rose    { background: linear-gradient(135deg, #F43F5E, #E11D48); }
+.bg-amber   { background: linear-gradient(135deg, #F59E0B, #D97706); }
+.bg-sky     { background: linear-gradient(135deg, #0EA5E9, #0284C7); }
+.bg-fuchsia { background: linear-gradient(135deg, #D946EF, #C026D3); }
+.bg-orange  { background: linear-gradient(135deg, #FB923C, #EA580C); }
+.bill-info {
+  flex: 1;
+  margin-left: 16rpx;
+}
+.bill-name {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--text);
+}
+.bill-note {
+  font-size: 24rpx;
+  color: var(--muted);
+  margin-top: 4rpx;
+}
+.bill-amount {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--danger);
+}
+.bill-amount.income {
+  color: var(--success);
+}
+
+/* 空状态 */
+.empty-tip {
+  text-align: center;
+  color: var(--muted);
+  font-size: 28rpx;
+  padding: 60rpx 0;
+}
+
+/* FAB */
+.fab {
+  position: fixed;
+  right: 40rpx;
+  bottom: 120rpx;
+  width: 112rpx;
+  height: 112rpx;
+  background: linear-gradient(135deg, #667EEA, #764BA2);
+  border-radius: 50%;
+  color: #FFFFFF;
+  font-size: 64rpx;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(102, 126, 234, 0.5);
+  z-index: 100;
+}
