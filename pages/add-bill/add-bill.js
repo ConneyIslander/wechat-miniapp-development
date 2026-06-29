@@ -22,5 +22,8 @@ Page({
   },
   onUnload() {
     console.log('[add-bill] onUnload');
+  },
+  onSave() {
+    console.log('[add-bill] onSave', this.data);
   }
-})
+});

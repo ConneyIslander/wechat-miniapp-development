@@ -1,4 +1,6 @@
 // pages/index/index.js
+const api = require('../../utils/api');
+
 Page({
   data: {
     title: '首页',
@@ -13,6 +15,13 @@ Page({
     const now = new Date();
     const month = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
     this.setData({ month });
+
+    // 测试请求层
+    api.getBills('2026-06').then(res => {
+      console.log('【测试成功】', res);
+    }).catch(err => {
+      console.error('【测试失败】', err);
+    });
   },
   onReady() {
     console.log('[index] onReady');
@@ -29,4 +38,4 @@ Page({
       url: '/pages/add-bill/add-bill'
     });
   }
-})
+});

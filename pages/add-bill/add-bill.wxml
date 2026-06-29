@@ -27,6 +27,6 @@
 
   <view class="placeholder-block">
     <text>【底部】提交按钮</text>
-    <button type="primary">保存</button>
+    <button type="primary" bindtap="onSave">保存</button>
   </view>
 </view>
