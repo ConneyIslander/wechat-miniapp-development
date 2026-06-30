@@ -1,0 +1,6 @@
+<!--components/month-picker/month-picker.wxml-->
+<view class="month-picker">
+  <view class="arrow" bindtap="onPrev">‹</view>
+  <view class="month-text">{{displayMonth}}</view>
+  <view class="arrow" bindtap="onNext">›</view>
+</view>

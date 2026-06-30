@@ -5,6 +5,11 @@ function getBills(month) {
   return request({ method: 'GET', path: `/api/bills?month=${month}` });
 }
 
+/** 获取累计积蓄（所有月份） */
+function getTotalBalance() {
+  return request({ method: 'GET', path: '/api/bills/total-balance' });
+}
+
 /** 创建账单 */
 function createBill(data) {
   return request({ method: 'POST', path: '/api/bills', data });
@@ -54,5 +59,6 @@ module.exports = {
   addCategory,
   getStatistics,
   getBudget,
-  setBudget
+  setBudget,
+  getTotalBalance
 };

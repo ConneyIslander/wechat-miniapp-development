@@ -104,15 +104,16 @@ Page({
 
     api.createBill({
       category: selectedCategory.name,
-      categoryId: selectedCategory.id,
+      category_id: selectedCategory.id,
       amount: parseFloat(amount),
       note,
       type,
       date
     }).then(res => {
-      if (homePage) homePage.replaceTempBill(tempId, res.data || { id: res.id });
+      if (homePage) homePage.replaceTempBill(tempId, res);
     }).catch(() => {
-      // API 不通时保留乐观更新结果，不弹错误
+      // API 不通时保留乐观更新结果，刷新确保状态正确
+      if (homePage) homePage._loadData(homePage.data.month);
     });
     wx.navigateBack();
   }

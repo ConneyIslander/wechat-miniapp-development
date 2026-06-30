@@ -1,0 +1,21 @@
+/* components/month-picker/month-picker.wxss */
+.month-picker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32rpx 0 24rpx;
+  gap: 24rpx;
+}
+.arrow {
+  font-size: 48rpx;
+  color: var(--primary);
+  padding: 8rpx 16rpx;
+  line-height: 1;
+}
+.month-text {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--text);
+  min-width: 200rpx;
+  text-align: center;
+}

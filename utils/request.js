@@ -35,6 +35,7 @@ function request(options) {
       },
       fail(err) {
         if (showLoading) wx.hideLoading();
+        console.error('[请求失败]', baseUrl + path, err);
         wx.showToast({ title: '网络错误', icon: 'none', duration: 2000 });
         reject({ message: '网络错误', err });
       }

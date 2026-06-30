@@ -1,29 +1,27 @@
 <!--pages/index/index.wxml-->
 <view class="page">
 
-  <!-- 月份切换 -->
-  <view class="month-bar">
-    <view class="month-arrow" bindtap="onPrevMonth">‹</view>
-    <view class="month-text">{{month}}年</view>
-    <view class="month-arrow" bindtap="onNextMonth">›</view>
-  </view>
+  <!-- 月份选择器 -->
+  <month-picker month="{{month}}" bind:change="onMonthChange" />
 
   <!-- 概览卡片 -->
   <view class="overview-card">
-    <view class="overview-row">
-      <view class="overview-item">
-        <view class="overview-label">本月支出</view>
-        <view class="overview-value expense">¥{{totalExpense}}</view>
-      </view>
-      <view class="overview-divider"></view>
+    <view class="overview-grid">
       <view class="overview-item">
         <view class="overview-label">本月收入</view>
         <view class="overview-value income">¥{{totalIncome}}</view>
       </view>
-      <view class="overview-divider"></view>
       <view class="overview-item">
-        <view class="overview-label">结余</view>
-        <view class="overview-value">¥{{balance}}</view>
+        <view class="overview-label">本月支出</view>
+        <view class="overview-value expense">¥{{totalExpense}}</view>
+      </view>
+      <view class="overview-item">
+        <view class="overview-label">本月结余</view>
+        <view class="overview-value {{balance >= 0 ? 'income' : 'expense'}}">¥{{balance}}</view>
+      </view>
+      <view class="overview-item">
+        <view class="overview-label">本月积蓄</view>
+        <view class="overview-value income">¥{{totalBalance}}</view>
       </view>
     </view>
   </view>

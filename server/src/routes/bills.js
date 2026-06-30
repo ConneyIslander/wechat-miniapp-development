@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 
+router.get('/total-balance', (req, res, next) => {
+  try {
+    const row = db.prepare(`
+      SELECT
+        COALESCE(SUM(CASE WHEN type = 'income' THEN amount ELSE 0 END), 0) as total_income,
+        COALESCE(SUM(CASE WHEN type = 'expense' THEN amount ELSE 0 END), 0) as total_expense
+      FROM bills
+    `).get();
+    res.json({ balance: row.total_income - row.total_expense });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get('/', (req, res, next) => {
   try {
     const { month } = req.query;
@@ -48,6 +62,7 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   try {
+    console.log('[POST /api/bills] body:', JSON.stringify(req.body));
     const { amount, category_id, type, date, note = '' } = req.body;
     
     if (!amount || amount <= 0) {

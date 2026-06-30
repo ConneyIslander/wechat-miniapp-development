@@ -42,6 +42,7 @@ router.get('/', (req, res, next) => {
       month,
       total_expense: totalExpense.total,
       total_income: totalIncome.total,
+      balance: totalIncome.total - totalExpense.total,
       expense_by_category: expenseByCategory,
       daily_expense: dailyExpense
     });

@@ -7,7 +7,8 @@ Page({
     totalExpense: 0,
     totalIncome: 0,
     balance: 0,
-    groupedBills: [] // [{ date: '06-28', dateLabel: '6月28日', expense: 35.5, income: 0, bills: [...] }]
+    totalBalance: 0,
+    groupedBills: []
   },
   onLoad() {
     const now = new Date();
@@ -16,28 +17,54 @@ Page({
     this._loadData(month);
   },
   onShow() {
-    const pages = getCurrentPages();
-    const homePage = pages[pages.length - 1];
-    if (homePage && homePage._refreshAfterAdd) {
-      homePage._refreshAfterAdd = false;
+    // 从记账页返回时自动刷新
+    if (this._needRefresh) {
+      this._needRefresh = false;
       this._loadData(this.data.month);
     }
   },
-  _loadData(month) {
+  onAddTap() {
+    this._needRefresh = true;
+    wx.navigateTo({ url: '/pages/add-bill/add-bill' });
+  },
+  onMonthChange(e) {
+    const { month } = e.detail;
+    this.setData({ month });
+    this._loadData(month);
+  },
+  onPullDownRefresh() {
+    this._loadData(this.data.month, () => wx.stopPullDownRefresh());
+  },
+  _loadData(month, callback) {
     Promise.all([
       api.getBills(month),
-      api.getStatistics(month)
-    ]).then(([billsRes, statRes]) => {
-      const bills = billsRes.data || billsRes || [];
-      const stats = statRes.data || statRes || {};
+      api.getStatistics(month),
+      api.getTotalBalance()
+    ]).then(([billsRes, statRes, totalRes]) => {
+      const bills = (billsRes.bills || []).map(b => ({
+        id: b.id,
+        category: b.category_name,
+        iconChar: b.category_icon,
+        iconBg: 'bg-violet',
+        amount: b.amount,
+        type: b.type,
+        date: b.date,
+        note: b.note
+      }));
+      const stats = statRes || {};
+      const totalExpense = stats.total_expense || 0;
+      const totalIncome = stats.total_income || 0;
       this.setData({
-        totalExpense: stats.totalExpense || 0,
-        totalIncome: stats.totalIncome || 0,
-        balance: stats.balance || 0,
+        totalExpense,
+        totalIncome,
+        balance: totalIncome - totalExpense,
+        totalBalance: totalRes.balance || 0,
         groupedBills: this._groupByDate(bills)
       });
+      if (callback) callback();
     }).catch(() => {
-      this.setData({ groupedBills: [], totalExpense: 0, totalIncome: 0, balance: 0 });
+      this.setData({ groupedBills: [], totalExpense: 0, totalIncome: 0, balance: 0, totalBalance: 0 });
+      if (callback) callback();
     });
   },
   _groupByDate(bills) {
@@ -53,23 +80,7 @@ Page({
     });
     return Object.values(map).sort((a, b) => b.date.localeCompare(a.date));
   },
-  onAddTap() {
-    wx.navigateTo({ url: '/pages/add-bill/add-bill' });
-  },
-  onPrevMonth() {
-    const [y, m] = this.data.month.split('-').map(Number);
-    const date = new Date(y, m - 2, 1);
-    const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-    this.setData({ month });
-    this._loadData(month);
-  },
-  onNextMonth() {
-    const [y, m] = this.data.month.split('-').map(Number);
-    const date = new Date(y, m, 1);
-    const month = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-    this.setData({ month });
-    this._loadData(month);
-  },
+  // 乐观更新：记账页提交时先显示
   updateTodayBills(bill) {
     const grouped = this._groupByDate([bill, ...this._flattenBills()]);
     let { totalExpense, totalIncome } = this.data;
