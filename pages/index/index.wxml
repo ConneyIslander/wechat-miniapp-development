@@ -27,7 +27,10 @@
   </view>
 
   <!-- 本月账单（按日期分组） -->
-  <view class="section-title">本月账单</view>
+  <view class="section-title">
+    <text>本月账单</text>
+    <text class="see-all" bindtap="onSeeAll">查看全部 ›</text>
+  </view>
   <view class="bill-list">
     <block wx:if="{{groupedBills.length === 0}}">
       <view class="empty-tip">本月还没有账单</view>

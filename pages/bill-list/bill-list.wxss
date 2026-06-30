@@ -1,1 +1,186 @@
-/**bill-list.wxss**/
+/* pages/bill-list/bill-list.wxss */
+.page {
+  min-height: 100vh;
+  background: #f5f6fa;
+}
+
+/* ---- 顶部栏 ---- */
+.top-bar {
+  background: #fff;
+  padding: 24rpx 32rpx 16rpx;
+  border-bottom: 1rpx solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.top-month {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.filter-tabs {
+  display: flex;
+  background: #f0f0f0;
+  border-radius: 20rpx;
+  padding: 4rpx;
+}
+
+.tab {
+  padding: 8rpx 24rpx;
+  font-size: 26rpx;
+  color: #888;
+  border-radius: 16rpx;
+  transition: all 0.2s;
+}
+
+.tab.active {
+  background: #6c5ce7;
+  color: #fff;
+}
+
+/* ---- 列表 ---- */
+.bill-scroll {
+  height: calc(100vh - 100rpx);
+}
+
+.empty {
+  text-align: center;
+  padding: 120rpx 0;
+  color: #aaa;
+  font-size: 28rpx;
+}
+
+/* ---- 日期分组 ---- */
+.day-group {
+  margin-top: 16rpx;
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+  padding: 12rpx 32rpx;
+  background: #f5f6fa;
+}
+
+.day-label {
+  font-size: 26rpx;
+  color: #666;
+  flex: 1;
+}
+
+.day-expense {
+  font-size: 24rpx;
+  color: #e74c3c;
+  margin-right: 16rpx;
+}
+
+.day-income {
+  font-size: 24rpx;
+  color: #2ecc71;
+}
+
+/* ---- 账单行（可滑动） ---- */
+.bill-row-wrap {
+  overflow: hidden;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.bill-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  transform: translateX(0);
+  transition: transform 0.25s ease;
+  background: #fff;
+}
+
+.bill-row.swiped {
+  transform: translateX(-140rpx);
+}
+
+/* ---- 主内容 ---- */
+.bill-main {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 24rpx 32rpx;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.bill-icon-wrap {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+  flex-shrink: 0;
+}
+
+.bill-icon-text {
+  font-size: 36rpx;
+}
+
+.bill-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.bill-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.bill-note {
+  font-size: 24rpx;
+  color: #aaa;
+  margin-top: 4rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bill-amount {
+  font-size: 30rpx;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+.bill-amount.expense {
+  color: #e74c3c;
+}
+
+.bill-amount.income {
+  color: #2ecc71;
+}
+
+/* ---- 删除按钮 ---- */
+.delete-btn {
+  width: 140rpx;
+  height: 100%;
+  background: #e74c3c;
+  color: #fff;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+/* 辅助色 */
+.bg-violet { background: #f0e6ff; }

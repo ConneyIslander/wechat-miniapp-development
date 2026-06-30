@@ -27,6 +27,9 @@ Page({
     this._needRefresh = true;
     wx.navigateTo({ url: '/pages/add-bill/add-bill' });
   },
+  onSeeAll() {
+    wx.navigateTo({ url: `/pages/bill-list/bill-list?month=${this.data.month}` });
+  },
   onMonthChange(e) {
     const { month } = e.detail;
     this.setData({ month });

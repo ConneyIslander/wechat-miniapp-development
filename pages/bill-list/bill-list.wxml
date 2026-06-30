@@ -1,24 +1,80 @@
 <!--pages/bill-list/bill-list.wxml-->
-<view class="page-container">
-  <view class="placeholder-block">
-    <text>【顶部】月份切换器</text>
-    <view>当前月份：{{month}}</view>
+<view class="page">
+
+  <!-- 顶部月份+筛选 -->
+  <view class="top-bar">
+    <text class="top-month">{{month}}</text>
+    <view class="filter-tabs">
+      <view
+        class="tab {{filterType === 'all' ? 'active' : ''}}"
+        data-type="all"
+        bindtap="onFilterTap"
+      >全部</view>
+      <view
+        class="tab {{filterType === 'expense' ? 'active' : ''}}"
+        data-type="expense"
+        bindtap="onFilterTap"
+      >支出</view>
+      <view
+        class="tab {{filterType === 'income' ? 'active' : ''}}"
+        data-type="income"
+        bindtap="onFilterTap"
+      >收入</view>
+    </view>
   </view>
 
-  <view class="placeholder-block">
-    <text>【中部】按日期分组的账单列表</text>
+  <!-- 账单列表 -->
+  <scroll-view scroll-y class="bill-scroll">
     <block wx:if="{{groupedBills.length === 0}}">
-      <view>暂无账单数据</view>
+      <view class="empty">暂无账单</view>
     </block>
     <block wx:else>
-      <view wx:for="{{groupedBills}}" wx:key="date">
-        <view>日期：{{item.date}}</view>
+      <view
+        wx:for="{{groupedBills}}"
+        wx:key="date"
+        class="day-group"
+      >
+        <!-- 日期标题 -->
+        <view class="day-header">
+          <text class="day-label">{{_formatDateLabel(item.date)}}</text>
+          <text class="day-expense">支 ¥{{item.expense}}</text>
+          <text class="day-income">收 ¥{{item.income}}</text>
+        </view>
+
+        <!-- 账单行 -->
+        <view
+          wx:for="{{item.bills}}"
+          wx:for-item="bill"
+          wx:key="id"
+          class="bill-row-wrap"
+        >
+          <!-- 滑动层 -->
+          <view
+            class="bill-row {{openId === bill.id ? 'swiped' : ''}}"
+            data-id="{{bill.id}}"
+            bindtouchstart="onTouchStart"
+            bindtouchmove="onTouchMove"
+            bindtouchend="onTouchEnd"
+          >
+            <!-- 主内容 -->
+            <view class="bill-main">
+              <view class="bill-icon-wrap {{bill.iconBg}}">
+                <text class="bill-icon-text">{{bill.iconChar}}</text>
+              </view>
+              <view class="bill-info">
+                <view class="bill-name">{{bill.category}}</view>
+                <view class="bill-note">{{bill.note}}</view>
+              </view>
+              <view class="bill-amount {{bill.type}}">
+                {{bill.type === 'income' ? '+' : '-'}}{{bill.amount}}
+              </view>
+            </view>
+            <!-- 左滑露出删除按钮 -->
+            <view class="delete-btn" data-id="{{bill.id}}" bindtap="onDeleteTap">删除</view>
+          </view>
+        </view>
       </view>
     </block>
-  </view>
+  </scroll-view>
 
-  <view class="placeholder-block">
-    <text>【每条】账单卡片</text>
-    <view>账单总数：{{bills.length}}</view>
-  </view>
 </view>
