@@ -35,6 +35,11 @@ function addCategory(data) {
   return request({ method: 'POST', path: '/api/categories', data });
 }
 
+/** 删除自定义分类 */
+function deleteCategory(id) {
+  return request({ method: 'DELETE', path: `/api/categories/${id}` });
+}
+
 /** 获取月度统计 */
 function getStatistics(month) {
   return request({ method: 'GET', path: `/api/statistics?month=${month}` });
@@ -77,6 +82,7 @@ module.exports = {
   deleteBill,
   getCategories,
   addCategory,
+  deleteCategory,
   getStatistics,
   getBudget,
   setBudget,

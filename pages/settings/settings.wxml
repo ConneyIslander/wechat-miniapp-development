@@ -1,21 +1,105 @@
 <!--pages/settings/settings.wxml-->
-<view class="page-container">
-  <view class="placeholder-block">
-    <text>【顶部】月度预算设置</text>
-    <view>月份：{{month}}</view>
-    <view>当前预算：¥{{budget}}</view>
-    <button>保存预算</button>
+<view class="page">
+  <!-- 月度预算 -->
+  <view class="card">
+    <view class="card-title">本月预算</view>
+    <view class="budget-row" bindtap="onBudgetTap">
+      <view class="budget-amount">
+        <text class="budget-num">{{budget || 0}}</text>
+        <text class="budget-unit">元</text>
+      </view>
+      <view class="budget-tip">点击修改</view>
+    </view>
+    <view class="budget-status" wx:if="{{budget > 0}}">
+      <text class="status-expense" wx:if="{{overBudget}}">⚠️ 已超支</text>
+      <text class="status-safe" wx:else>💰 预算充足</text>
+      <text class="status-remaining">剩余 ¥{{remainingBudget}}</text>
+    </view>
   </view>
 
-  <view class="placeholder-block">
-    <text>【中部】支出分类管理</text>
-    <view>分类数：{{expenseCategories.length}}</view>
-    <button>添加支出分类</button>
-  </view>
+  <!-- 分类管理 -->
+  <view class="card">
+    <view class="card-title">分类管理</view>
+    <!-- Tab -->
+    <view class="tab-bar">
+      <view
+        class="tab {{activeTab === 'expense' ? 'active' : ''}}"
+        bindtap="switchTab"
+        data-tab="expense"
+      >支出</view>
+      <view
+        class="tab {{activeTab === 'income' ? 'active' : ''}}"
+        bindtap="switchTab"
+        data-tab="income"
+      >收入</view>
+    </view>
 
-  <view class="placeholder-block">
-    <text>【底部】收入分类管理</text>
-    <view>分类数：{{incomeCategories.length}}</view>
-    <button>添加收入分类</button>
+    <!-- 分类列表 -->
+    <view class="category-list">
+      <view
+        class="cat-item"
+        wx:for="{{activeTab === 'expense' ? expenseCategories : incomeCategories}}"
+        wx:key="id"
+      >
+        <view class="cat-icon">{{item.icon}}</view>
+        <view class="cat-name">{{item.name}}</view>
+        <view class="cat-lock" wx:if="{{item.is_preset}}">🔒</view>
+        <view class="cat-del" wx:else bindtap="onDeleteCat" data-id="{{item.id}}" data-name="{{item.name}}">✕</view>
+      </view>
+      <view class="empty-cat" wx:if="{{activeTab === 'expense' && expenseCategories.length === 0}}">暂无分类</view>
+      <view class="empty-cat" wx:if="{{activeTab === 'income' && incomeCategories.length === 0}}">暂无分类</view>
+    </view>
+
+    <!-- 添加分类 -->
+    <view class="add-cat-btn" bindtap="onAddCat">+ 添加分类</view>
+  </view>
+</view>
+
+<!-- 修改预算弹窗 -->
+<view class="modal-mask" wx:if="{{showBudgetModal}}">
+  <view class="modal-box">
+    <view class="modal-title">设置月度预算</view>
+    <input
+      class="modal-input"
+      type="digit"
+      placeholder="请输入预算金额"
+      value="{{budgetInput}}"
+      bindinput="onBudgetInput"
+    />
+    <view class="modal-btns">
+      <button class="btn-cancel" bindtap="onCancelBudget">取消</button>
+      <button class="btn-confirm" bindtap="onConfirmBudget">确认</button>
+    </view>
+  </view>
+</view>
+
+<!-- 添加分类弹窗 -->
+<view class="modal-mask" wx:if="{{showAddCatModal}}">
+  <view class="modal-box">
+    <view class="modal-title">添加分类</view>
+    <view class="modal-field">
+      <text class="field-label">图标</text>
+      <input
+        class="modal-input small"
+        placeholder="如 🍜"
+        maxlength="2"
+        value="{{newCatIcon}}"
+        bindinput="onIconInput"
+      />
+    </view>
+    <view class="modal-field">
+      <text class="field-label">名称</text>
+      <input
+        class="modal-input small"
+        placeholder="如 餐饮"
+        maxlength="8"
+        value="{{newCatName}}"
+        bindinput="onNameInput"
+      />
+    </view>
+    <view class="modal-btns">
+      <button class="btn-cancel" bindtap="onCancelAddCat">取消</button>
+      <button class="btn-confirm" bindtap="onConfirmAddCat">确认</button>
+    </view>
   </view>
 </view>

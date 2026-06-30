@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS categories (
   icon TEXT NOT NULL,
   type TEXT NOT NULL CHECK(type IN ('expense', 'income')),
   is_preset INTEGER DEFAULT 0,
-  sort_order INTEGER DEFAULT 0
+  sort_order INTEGER DEFAULT 0,
+  UNIQUE(type, name)
 );
 
 -- 账单表
@@ -36,6 +37,8 @@ CREATE TABLE IF NOT EXISTS goals (
   status TEXT DEFAULT 'active' CHECK(status IN ('active', 'completed')),
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- （重复数据清理已在 db.js 中完成）
 
 -- 插入预设支出分类
 INSERT OR IGNORE INTO categories (name, icon, type, is_preset, sort_order) VALUES ('餐饮', '🍜', 'expense', 1, 1);
