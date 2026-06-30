@@ -27,6 +27,16 @@ CREATE TABLE IF NOT EXISTS budgets (
   amount REAL NOT NULL
 );
 
+-- 愿望清单表
+CREATE TABLE IF NOT EXISTS goals (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  target_amount REAL NOT NULL,
+  saved_amount REAL DEFAULT 0,
+  status TEXT DEFAULT 'active' CHECK(status IN ('active', 'completed')),
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
 -- 插入预设支出分类
 INSERT OR IGNORE INTO categories (name, icon, type, is_preset, sort_order) VALUES ('餐饮', '🍜', 'expense', 1, 1);
 INSERT OR IGNORE INTO categories (name, icon, type, is_preset, sort_order) VALUES ('交通', '🚌', 'expense', 1, 2);
@@ -36,6 +46,7 @@ INSERT OR IGNORE INTO categories (name, icon, type, is_preset, sort_order) VALUE
 INSERT OR IGNORE INTO categories (name, icon, type, is_preset, sort_order) VALUES ('医疗', '💊', 'expense', 1, 6);
 INSERT OR IGNORE INTO categories (name, icon, type, is_preset, sort_order) VALUES ('学习', '📚', 'expense', 1, 7);
 INSERT OR IGNORE INTO categories (name, icon, type, is_preset, sort_order) VALUES ('其他', '✏️', 'expense', 1, 8);
+INSERT OR IGNORE INTO categories (name, icon, type, is_preset, sort_order) VALUES ('愿望存入', '🎯', 'expense', 1, 9);
 
 -- 插入预设收入分类
 INSERT OR IGNORE INTO categories (name, icon, type, is_preset, sort_order) VALUES ('工资', '💰', 'income', 1, 1);

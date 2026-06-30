@@ -50,6 +50,26 @@ function setBudget(data) {
   return request({ method: 'POST', path: '/api/budgets', data });
 }
 
+/** 获取愿望清单 */
+function getGoals() {
+  return request({ method: 'GET', path: '/api/goals' });
+}
+
+/** 创建愿望目标 */
+function createGoal(data) {
+  return request({ method: 'POST', path: '/api/goals', data });
+}
+
+/** 更新愿望目标（存入/完成） */
+function updateGoal(id, data) {
+  return request({ method: 'PATCH', path: `/api/goals/${id}`, data });
+}
+
+/** 删除愿望目标 */
+function deleteGoal(id) {
+  return request({ method: 'DELETE', path: `/api/goals/${id}` });
+}
+
 module.exports = {
   getBills,
   createBill,
@@ -60,5 +80,9 @@ module.exports = {
   getStatistics,
   getBudget,
   setBudget,
-  getTotalBalance
+  getTotalBalance,
+  getGoals,
+  createGoal,
+  updateGoal,
+  deleteGoal
 };

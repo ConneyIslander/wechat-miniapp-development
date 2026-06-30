@@ -38,6 +38,11 @@
 - **预期结果**：首页根据预算判断是否超支，超支时支出数字显示红色
 - **完成判定**：修改预算后首页判断逻辑即时生效
 
+### F7 — 愿望清单（目标储蓄）
+- **触发方式**：首页入口或设置页进入愿望清单页
+- **预期结果**：显示所有目标，每个目标显示名称、目标金额、已存金额、圆形进度条、状态标签；支持新建目标（名称+图标+目标金额）；支持手动存入金额到目标；支持删除目标；支持标记目标为已完成
+- **完成判定**：新建目标后出现在列表；存入金额后进度条更新；达成 100% 时状态变为"已达成"
+
 ---
 
 ## 3. 数据模型
@@ -72,6 +77,17 @@
 | id | INTEGER | PK, AUTOINCREMENT | |
 | month | TEXT | NOT NULL, UNIQUE | "2026-06" |
 | amount | REAL | NOT NULL | 预算金额 |
+
+### goals（愿望清单表）
+| 字段 | 类型 | 约束 | 说明 |
+|------|------|------|------|
+| id | INTEGER | PK, AUTOINCREMENT | |
+| name | TEXT | NOT NULL | 目标名称，如"买iPhone" |
+| icon | TEXT | NOT NULL | emoji 图标 |
+| target_amount | REAL | NOT NULL | 目标金额 |
+| saved_amount | REAL | DEFAULT 0 | 已存金额 |
+| status | TEXT | DEFAULT "active" | "active" / "completed" |
+| created_at | TEXT | NOT NULL, DEFAULT datetime('now') | 创建时间 |
 
 ---
 
@@ -155,6 +171,36 @@
 ### POST /api/budgets
 设置或更新月度预算。请求体：`{ "month": "2026-06", "amount": 3000 }`。存在则更新，不存在则插入。返回 200。
 
+### GET /api/goals
+获取所有愿望清单目标。按 created_at 倒序。
+
+**响应**：
+```json
+{
+  "goals": [
+    {
+      "id": 1,
+      "name": "买iPhone",
+      "icon": "📱",
+      "target_amount": 8000,
+      "saved_amount": 3200,
+      "progress": 40,
+      "status": "active",
+      "created_at": "2026-06-28T12:00:00.000Z"
+    }
+  ]
+}
+```
+
+### POST /api/goals
+创建愿望清单目标。请求体：`{ "name": "买iPhone", "icon": "📱", "target_amount": 8000 }`。返回 201。
+
+### PATCH /api/goals/:id
+更新目标（存入金额 / 标记完成）。请求体：`{ "saved_amount": 3500 }` 或 `{ "status": "completed" }`。返回 200。
+
+### DELETE /api/goals/:id
+删除目标。成功返回 `{ "message": "deleted" }`。
+
 ---
 
 ## 5. 页面结构
@@ -165,6 +211,7 @@
 | 记账页 | pages/add-bill | 金额输入 + 分类选择 + 日期 + 备注 |
 | 账单列表 | pages/bill-list | 按日期分组 + 左滑删除 + 分类筛选 |
 | 统计页 | pages/statistics | Canvas 饼图 + 柱状图 + 月份切换 |
+| 愿望清单 | pages/goals | 目标列表 + 进度条 + 新建/存入/完成 |
 | 设置页 | pages/settings | 预算设置 + 分类管理 |
 
 **自定义组件**：bill-card、category-picker、month-picker、pie-chart

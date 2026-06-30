@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "月度统计",
-  "usingComponents": {}
+  "usingComponents": {
+    "month-picker": "/components/month-picker/month-picker"
+  }
 }

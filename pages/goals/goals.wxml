@@ -1,0 +1,79 @@
+<view class="page">
+  <view class="balance-bar">
+    <text class="balance-label">剩余积蓄</text>
+    <text class="balance-value">¥{{balance}}</text>
+  </view>
+
+  <view class="add-bar" bindtap="onAddGoal">
+    <text>+</text>
+    <text>添加新目标</text>
+  </view>
+
+  <view class="goals-list">
+    <view wx:for="{{goals}}" wx:key="id" class="goal-card">
+      <view class="goal-left">
+        <text class="goal-name">{{item.name}}</text>
+        <text class="goal-amount">{{item.saved_amount}} / {{item.target_amount}}</text>
+        <text wx:if="{{item.status==='completed'}}" class="goal-done">已达成</text>
+      </view>
+      <view class="goal-right">
+        <text class="goal-pct">{{item.progress}}%</text>
+        <view class="progress-bar">
+          <view class="progress-fill" style="width: {{item.progress}}%"></view>
+        </view>
+        <view class="goal-btns">
+          <view class="btn-save" bindtap="onSave" data-id="{{item.id}}">存入</view>
+          <view class="btn-withdraw" bindtap="onWithdraw" data-id="{{item.id}}">取出</view>
+          <view class="btn-del" bindtap="onDelete" data-id="{{item.id}}">删除</view>
+        </view>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{goals.length===0&&loaded}}">还没有目标</view>
+  </view>
+
+  <view class="modal-mask" wx:if="{{showModal}}">
+    <view class="modal" catchtap="noop">
+      <text class="modal-title">新建目标</text>
+      <view class="form-item">
+        <text>名称</text>
+        <input value="{{form.name}}" bindinput="onFormInput" data-field="name" placeholder="请输入目标名称"/>
+      </view>
+      <view class="form-item">
+        <text>目标金额</text>
+        <input type="digit" value="{{form.target_amount}}" bindinput="onFormInput" data-field="target_amount" placeholder="请输入目标金额"/>
+      </view>
+      <view class="modal-btns">
+        <view class="btn cancel" bindtap="onCloseModal">取消</view>
+        <view class="btn confirm" bindtap="onConfirmAdd">确定</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-mask" wx:if="{{showSaveModal}}">
+    <view class="modal" catchtap="noop">
+      <text class="modal-title">存入金额</text>
+      <view class="balance-tip">可用：¥{{balance}}</view>
+      <view class="form-item">
+        <input type="digit" value="{{saveAmount}}" bindinput="onSaveAmountInput" placeholder="请输入金额"/>
+      </view>
+      <view class="modal-btns">
+        <view class="btn cancel" bindtap="onCloseSaveModal">取消</view>
+        <view class="btn confirm" bindtap="onConfirmSave">确定</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="modal-mask" wx:if="{{showWithdrawModal}}">
+    <view class="modal" catchtap="noop">
+      <text class="modal-title">取出金额</text>
+      <view class="balance-tip">可取：¥{{currentGoal.saved_amount}}</view>
+      <view class="form-item">
+        <input type="digit" value="{{withdrawAmount}}" bindinput="onWithdrawAmountInput" placeholder="请输入金额"/>
+      </view>
+      <view class="modal-btns">
+        <view class="btn cancel" bindtap="onCloseWithdrawModal">取消</view>
+        <view class="btn confirm" bindtap="onConfirmWithdraw">确定</view>
+      </view>
+    </view>
+  </view>
+</view>

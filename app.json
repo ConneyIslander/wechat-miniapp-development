@@ -4,6 +4,7 @@
     "pages/add-bill/add-bill",
     "pages/bill-list/bill-list",
     "pages/statistics/statistics",
+    "pages/goals/goals",
     "pages/settings/settings"
   ],
   "window": {
@@ -11,6 +12,38 @@
     "navigationBarTitleText": "记账本",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#F5F5F5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1890ff",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/home.png",
+        "selectedIconPath": "assets/home-active.png"
+      },
+      {
+        "pagePath": "pages/goals/goals",
+        "text": "愿望清单",
+        "iconPath": "assets/target.png",
+        "selectedIconPath": "assets/target-active.png"
+      },
+      {
+        "pagePath": "pages/statistics/statistics",
+        "text": "统计",
+        "iconPath": "assets/chart-bar.png",
+        "selectedIconPath": "assets/chart-bar-active.png"
+      },
+      {
+        "pagePath": "pages/settings/settings",
+        "text": "设置",
+        "iconPath": "assets/settings.png",
+        "selectedIconPath": "assets/settings-active.png"
+      }
+    ]
   },
   "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"

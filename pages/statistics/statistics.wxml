@@ -1,23 +1,57 @@
 <!--pages/statistics/statistics.wxml-->
-<view class="page-container">
-  <view class="placeholder-block">
-    <text>【顶部】月份切换器</text>
-    <view>当前月份：{{month}}</view>
+<view class="page">
+
+  <!-- 月份选择器 -->
+  <month-picker month="{{month}}" bind:change="onMonthChange" />
+
+  <!-- 收支汇总 -->
+  <view class="summary-row">
+    <view class="summary-item">
+      <view class="summary-label">本月支出</view>
+      <view class="summary-value expense">¥{{totalExpense}}</view>
+    </view>
+    <view class="summary-divider"></view>
+    <view class="summary-item">
+      <view class="summary-label">本月收入</view>
+      <view class="summary-value income">¥{{totalIncome}}</view>
+    </view>
+    <view class="summary-divider"></view>
+    <view class="summary-item">
+      <view class="summary-label">本月结余</view>
+      <view class="summary-value {{totalIncome - totalExpense >= 0 ? 'income' : 'expense'}}">¥{{totalIncome - totalExpense}}</view>
+    </view>
   </view>
 
-  <view class="placeholder-block">
-    <text>【中部】收支汇总</text>
-    <view>总支出：¥{{totalExpense}}</view>
-    <view>总收入：¥{{totalIncome}}</view>
+  <!-- 饼图区域 -->
+  <view class="chart-section">
+    <view class="chart-title">支出构成</view>
+    <view class="canvas-wrap">
+      <canvas type="2d" id="pie-canvas" class="chart-canvas"></canvas>
+    </view>
+    <!-- 图例 -->
+    <view class="legend" wx:if="{{expenseByCategory.length > 0}}">
+      <view
+        wx:for="{{expenseByCategory}}"
+        wx:key="name"
+        class="legend-item"
+      >
+        <view class="legend-dot" style="background:{{item.color}}"></view>
+        <text class="legend-name">{{item.name}}</text>
+        <text class="legend-value">¥{{item.value}}</text>
+        <text class="legend-pct">{{item.pct}}%</text>
+      </view>
+    </view>
+    <view class="empty-chart" wx:if="{{expenseByCategory.length === 0 && pieReady}}">
+      暂无支出数据
+    </view>
   </view>
 
-  <view class="placeholder-block">
-    <text>【中部】分类支出饼图 (Canvas)</text>
-    <view>分类数：{{expenseByCategory.length}}</view>
+  <!-- 柱状图区域 -->
+  <view class="chart-section">
+    <view class="chart-title">近6月收支</view>
+    <view class="canvas-wrap bar-wrap">
+      <canvas type="2d" id="bar-canvas" class="chart-canvas"></canvas>
+    </view>
   </view>
 
-  <view class="placeholder-block">
-    <text>【中部】日度支出柱状图 (Canvas)</text>
-    <view>日期数：{{dailyExpense.length}}</view>
-  </view>
 </view>
